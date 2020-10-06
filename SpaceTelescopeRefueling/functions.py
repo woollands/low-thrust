@@ -5,6 +5,7 @@ import spacecraft_params as sc
 import const as cn
 from numba import njit
 
+# Shortcuts
 cos    = np.cos
 sin    = np.sin
 tan    = np.tan
@@ -153,18 +154,18 @@ def thrust_angle(data,rho,eclipse):
             if (r[0] < 0): # Assume Sun is located along positive x-axis
                 gamma   = norm(r[1:2]) - cn.Req/cn.DU
                 zeta[i] = 0.5*(1.0+tanh(gamma/rho))
-                Pa[i]   = zeta[i]*sc.P
+                Pa[i]   = zeta[i]*cn.P
                 Thr     = Pa[i]*sc.A*sc.eta/sc.Isp/cn.g0
                 F[i]    = Thr*delta[i]
                 u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]*zeta[i]
             else:
-                Pa[i] = sc.P
+                Pa[i] = cn.P
                 Thr   = Pa[i]*sc.A*sc.eta/sc.Isp/cn.g0
                 F[i]  = Thr*delta[i]
                 u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]
         else:
-            Pa[i] = sc.P
-            Thr   = sc.P*sc.A*sc.eta/sc.Isp/cn.g0
+            Pa[i] = cn.P
+            Thr   = cn.P*sc.A*sc.eta/sc.Isp/cn.g0
             F[i]  = Thr*delta[i]
             u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]
 

@@ -20,7 +20,7 @@ def eom_twobody(t,x):
 
 # @jit(nopython=True)
 @njit
-def eom_mee_twobody_minfuel(t,x,rho):
+def eom_mee_twobody_minfuel(t,x,rho,eclipse):
 
     dxdt = np.zeros(14)
 
@@ -29,9 +29,12 @@ def eom_mee_twobody_minfuel(t,x,rho):
     si2can = sc.si2can
 
     # Eclipse Model
-    # [TF,Pa,zetaE] = eclipse_grazing_goat(t,x,rho)
-    # Thr = Pa*sc.A*sc.eff/sc.Isp/cn.g0  # Available Thrust (N)
-    Thr = 0.5
+    # if (eclipse):
+    #     [TF,Pa,zetaE] = eclipse_grazing_goat(t,x,rho)
+    #     Thr = Pa*sc.A*sc.eff/sc.Isp/cn.g0  # Available Thrust (N)
+    # else:
+    #     Thr = sc.Thr
+    Thr = sc.Thr # temporary fix
 
     # MEE States
     p = x[0]

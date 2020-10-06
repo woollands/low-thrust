@@ -75,27 +75,27 @@ p0[5] = 0.002470486378745
 p0[6] = 0.117893582793439
 # p0 = np.array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
 
-# Solve Min-Fuel Low Thrust
-rho = 1 # Continuation Parameter (engine throttle)
-p0_guess = p0
-optres = minimize(residuals,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',tol=1e-2)
-print("opt_err:",optres.fun)
-# print(states0_new)
-p0 = optres.x
+# # Solve Min-Fuel Low Thrust
+# rho = 1 # Continuation Parameter (engine throttle)
+# p0_guess = p0
+# optres = minimize(residuals,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',tol=1e-2)
+# print("opt_err:",optres.fun)
+# # print(states0_new)
+# p0 = optres.x
 
-sys.exit()
 # Continuation on rho
 rho      = 1
 rho_rate = 0.9
 mps_tol  = 1e-4
 iter     = 0
+eclipse  = False # Commented out in eom.py - too slow, need use a C++ eom and wrap in python)
 while rho > 1e-4:
 
-    if rho < 1e-4:
+    if rho < 1e-3:
         mps_tol  = 1e-5
         rho_rate = 0.95
     # Method of Particular Solutions
-    [soln,p0,mps_err] = mps_mee_ocp(tspan,p0,mee0,meef,rho,mps_tol)
+    [soln,p0,mps_err] = mps_mee_ocp(tspan,p0,mee0,meef,rho,eclipse,mps_tol)
     print("rho:",rho,"mps err:",mps_err)
     rho  = rho*rho_rate
 

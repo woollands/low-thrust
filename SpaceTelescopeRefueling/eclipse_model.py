@@ -5,6 +5,7 @@ import math
 from functions import mee2rv
 import sys
 
+# Shortcuts
 asin = math.asin
 acos = math.acos
 cos  = np.cos

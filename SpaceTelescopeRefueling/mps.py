@@ -50,7 +50,7 @@ def mps_twobody(tspan,states0,statesf):
 
     return v0, mps_err
 
-def mps_mee_ocp(tspan,p0,states0,statesf,rho,mps_tol):
+def mps_mee_ocp(tspan,p0,states0,statesf,rho,eclipse,mps_tol):
     # Method of particular solutions to solve Lambert's problem
     mps_err = 1
     cnt     = 0
@@ -78,7 +78,7 @@ def mps_mee_ocp(tspan,p0,states0,statesf,rho,mps_tol):
                 IC[tcnt+6-7] = IC[tcnt+6-7]-DEL[tcnt-1-7]
 
             # Integrate Dynamics
-            sol = integrator(lambda t,y: eom_mee_twobody_minfuel(t,y,rho),tspan,IC,method='LSODA',rtol=1e-13)
+            sol = integrator(lambda t,y: eom_mee_twobody_minfuel(t,y,rho,eclipse),tspan,IC,method='LSODA',rtol=1e-13)
             # sol = integrator(eom_mee_twobody_minfuel,(tspan[0],tspan[-1]),IC,method='LSODA',rtol=1e-12)
             soln = sol.y[0:7,-1]
             if tcnt == 0:
