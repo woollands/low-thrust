@@ -1,5 +1,5 @@
 import numpy as np
-from numpy import linalg as LA
+from numpy import linalg
 from PIL import Image
 import spacecraft_params as sc
 import const as cn
@@ -13,16 +13,16 @@ sqrt   = np.sqrt
 tanh   = np.tanh
 cross  = np.cross
 matmul = np.matmul
-norm   = LA.norm
+norm   = linalg.norm
 
 
-__all__ = ["mee2rv", "inertial2radial", "thrust_angle", "drawEarth"]
+__all__ = ["mee2rv", "classical2mee","inertial2radial", "switch_function","thrust_angle", "drawEarth"]
 
 ################################################################################
 # @njit
 def mee2rv(p,f,g,h,k,L):
-    """ Convert modified equinoctial elements to cartesian coordinates
-    Robyn Woollands 04/13/2020
+    """
+    Converts modified equinoctial elements to cartesian coordinates.
     Parameters:
     p  -- semilatus rectum
     f  -- e*cos(w+Omega)
@@ -30,10 +30,11 @@ def mee2rv(p,f,g,h,k,L):
     h  -- tan(i/2)*cos(Omega)
     k  -- tan(i/2)*sin(Omega)
     L  -- true longitude
-    mu -- standard gravitational parameter
     Returns:
     r -- position
     v -- velocity
+    External:
+    numpy, const.py
     """
     # Common terms
     alpha2 = h**2 - k**2
@@ -58,6 +59,25 @@ def mee2rv(p,f,g,h,k,L):
 ################################################################################
 # @njit
 def classical2mee(a,e,inc,Om,w,nu):
+    """
+    Converts classical orbit elements to modified equinoctial elements
+    Parameters:
+    a   -- semimajor axis
+    e   -- eccentricity
+    inc -- inclination
+    Om  -- right ascension of ascending node
+    w   -- argument of perigee
+    nu  -- true anomaly
+    Returns:
+    p  -- semilatus rectum
+    f  -- e*cos(w+Omega)
+    g  -- e*sin(w+Omega)
+    h  -- tan(i/2)*cos(Omega)
+    k  -- tan(i/2)*sin(Omega)
+    L  -- true longitude
+    External:
+    numpy
+    """
     p = a*(1 - e**2);
     f = e*cos(w + Om);
     g = e*sin(w + Om);
@@ -68,6 +88,16 @@ def classical2mee(a,e,inc,Om,w,nu):
 ################################################################################
 # @njit
 def inertial2radial(r,v):
+    """
+    Computes transformation nmatrix to convert vectors from ECI to LVLH
+    Parameters:
+    r -- ECI position
+    v -- ECI velocity
+    Returns:
+    M -- 3x3 trans matrix
+    External:
+    numpy
+    """
     # Radial in x- and z- direction
     hvec = cross(r,v);
     h    = norm(hvec);
@@ -75,10 +105,23 @@ def inertial2radial(r,v):
     zrdl = hvec/h;
     # Radial in y-direction
     yrdl = cross(zrdl,xrdl);
-    return np.array([xrdl,yrdl,zrdl])
+    M = np.array([xrdl,yrdl,zrdl])
+    return M
 ################################################################################
 # @njit
 def switch_function(data,rho):
+    """
+    Computes switch function from states and costates
+    Parameters:
+    data -- time history of states and costates
+    rho  -- switch smoothing parameter
+    Returns:
+    S     -- switch function
+    delta -- engine throttle
+    BTL   -- matrix (B.T * lamba)
+    External:
+    numpy, spacecraft_params.py
+    """
     # Assign Variables
     p       = data[:,0]
     f       = data[:,1]
@@ -123,6 +166,26 @@ def switch_function(data,rho):
 ################################################################################
 # @njit
 def thrust_angle(data,rho,eclipse):
+    """
+    Computes the optimal instantaneous thrust angle
+    Parameters:
+    data    -- time history of states and costates
+    rho     -- switch smoothing parameter
+    eclipse -- boolean (true or false)
+    Returns:
+    r       -- Cartesian position
+    v       -- Cartesian velocity
+    u_inert -- inertial thrust vector
+    u_lvlh  -- LVLH thrust vector
+    S       -- switch function
+    F       -- instantaneous thrust magnitude
+    Pa      -- Power available
+    delta   -- engine throttle
+    zeta    -- eclipse smoothing parameter
+    External:
+    numpy, const.py, spacecraft_params.py
+    """
+    r, v, u_inert, u_lvlh, S, F, Pa, delta, zeta
     # Assign Variables
     p       = data[:,0]
     f       = data[:,1]
@@ -174,7 +237,18 @@ def thrust_angle(data,rho,eclipse):
     return r, v, u_inert, u_lvlh, S, F, Pa, delta, zeta
 ################################################################################
 def drawEarth(Radius):
-
+    """
+    Computes meshgrid for plotting the Earth
+    Parameters:
+    Radius -- radius of Earth
+    Returns:
+    x   -- x position
+    y   -- y position
+    z   -- z position
+    img -- RGB values
+    External:
+    numpy, PIL, blue_marble.jpg
+    """
     # Create a sphere with earths surface texture
 
     # Load texture
@@ -202,3 +276,4 @@ def drawEarth(Radius):
     # z = Radius*np.cos(phi)
 
     return x, y, z, img
+################################################################################
