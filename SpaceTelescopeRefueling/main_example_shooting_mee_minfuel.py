@@ -109,7 +109,7 @@ mee0_new[0:7] = mee0[0:7]
 mee0_new[7:14] = p0[0:7]
 
 # Check Solution
-sol   = integrator(lambda t,y: eom_mee_twobody_minfuel(t,y,rho),tspan,mee0_new,method='LSODA',rtol=1e-13)
+sol   = integrator(lambda t,y: eom_mee_twobody_minfuel(t,y,rho,eclipse),tspan,mee0_new,method='LSODA',rtol=1e-13)
 data  = np.array(soln.y,dtype=float).T
 time  = np.array(soln.t,dtype=float).T
-plot_mee_minfuel(time,data,rho)
+plot_mee_minfuel(time,data,rho,eclipse)

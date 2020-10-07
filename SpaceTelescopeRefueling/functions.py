@@ -154,17 +154,17 @@ def thrust_angle(data,rho,eclipse):
             if (r[0] < 0): # Assume Sun is located along positive x-axis
                 gamma   = norm(r[1:2]) - cn.Req/cn.DU
                 zeta[i] = 0.5*(1.0+tanh(gamma/rho))
-                Pa[i]   = zeta[i]*cn.P
+                Pa[i]   = zeta[i]*cn.Power
                 Thr     = Pa[i]*sc.A*sc.eta/sc.Isp/cn.g0
                 F[i]    = Thr*delta[i]
                 u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]*zeta[i]
             else:
-                Pa[i] = cn.P
+                Pa[i] = cn.Power
                 Thr   = Pa[i]*sc.A*sc.eta/sc.Isp/cn.g0
                 F[i]  = Thr*delta[i]
                 u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]
         else:
-            Pa[i] = cn.P
+            Pa[i] = cn.Power
             Thr   = cn.P*sc.A*sc.eta/sc.Isp/cn.g0
             F[i]  = Thr*delta[i]
             u_inert[i,:] = -BTL[i]/norm(BTL[i])*delta[i]

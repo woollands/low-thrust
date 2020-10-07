@@ -9,7 +9,7 @@ from functions import mee2rv
 from functions import drawEarth
 from functions import thrust_angle
 
-def plot_mee_minfuel(t,data,rho):
+def plot_mee_minfuel(t,data,rho,eclipse):
 
     p = data[:,0]
     f = data[:,1]
@@ -27,7 +27,7 @@ def plot_mee_minfuel(t,data,rho):
     mlam = data[:,13]
 
     # [r,v] = mee2rv(p,f,g,h,k,L)
-    [r,v,u_inert,u_lvlh,S,F,Pa,delta,zeta] = thrust_angle(data,rho,False)
+    [r,v,u_inert,u_lvlh,S,F,Pa,delta,zeta] = thrust_angle(data,rho,eclipse)
 
     fig, (ax1, ax2, ax3) = plt.subplots(3)
     fig.suptitle('States 1')
