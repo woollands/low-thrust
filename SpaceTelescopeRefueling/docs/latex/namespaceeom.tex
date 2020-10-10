@@ -1,0 +1,70 @@
+\hypertarget{namespaceeom}{}\doxysection{eom Namespace Reference}
+\label{namespaceeom}\index{eom@{eom}}
+
+
+Equations of motion.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceeom_ae075b5636bd9e624e5ed5c1780f9f5bd}{eom\+\_\+twobody}} (t, x)
+\item 
+def \mbox{\hyperlink{namespaceeom_a81d3a0134d7122d1a5d204a9ca77d4c0}{eom\+\_\+mee\+\_\+twobody\+J2\+\_\+minfuel}} (t, x, rho, eclipse)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Equations of motion for various systems. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py, spacecraft\+\_\+params.\+py 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000002}{Bug}}]No bugs known \end{DoxyRefDesc}
+\begin{DoxyWarning}{Warning}
+Eclipse model commented due to extremely long run times 
+\end{DoxyWarning}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceeom_a81d3a0134d7122d1a5d204a9ca77d4c0}\label{namespaceeom_a81d3a0134d7122d1a5d204a9ca77d4c0}} 
+\index{eom@{eom}!eom\_mee\_twobodyJ2\_minfuel@{eom\_mee\_twobodyJ2\_minfuel}}
+\index{eom\_mee\_twobodyJ2\_minfuel@{eom\_mee\_twobodyJ2\_minfuel}!eom@{eom}}
+\doxysubsubsection{\texorpdfstring{eom\_mee\_twobodyJ2\_minfuel()}{eom\_mee\_twobodyJ2\_minfuel()}}
+{\footnotesize\ttfamily def eom.\+eom\+\_\+mee\+\_\+twobody\+J2\+\_\+minfuel (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{x,  }\item[{}]{rho,  }\item[{}]{eclipse }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}MEE min-fuel equations of motion using two-body and J2
+Parameters:
+===========
+t       -- time
+x       -- state vector
+rho     -- switch smoothing parameter
+eclipse -- boolean (true or false)
+Return:
+=======
+dxdt -- state vector derivative
+External:
+=========
+numpy, const.py, spacecraft_params.py
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceeom_ae075b5636bd9e624e5ed5c1780f9f5bd}\label{namespaceeom_ae075b5636bd9e624e5ed5c1780f9f5bd}} 
+\index{eom@{eom}!eom\_twobody@{eom\_twobody}}
+\index{eom\_twobody@{eom\_twobody}!eom@{eom}}
+\doxysubsubsection{\texorpdfstring{eom\_twobody()}{eom\_twobody()}}
+{\footnotesize\ttfamily def eom.\+eom\+\_\+twobody (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{x }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Two-body equations of motion.
+Parameters:
+===========
+t -- time
+x -- state vector
+Returns:
+========
+dx -- state derivative vector
+External:
+=========
+numpy, const.py
+\end{DoxyVerb}
+ 

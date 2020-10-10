@@ -1,0 +1,100 @@
+\hypertarget{namespacemain__example__shooting__twobody}{}\doxysection{main\+\_\+example\+\_\+shooting\+\_\+twobody Namespace Reference}
+\label{namespacemain__example__shooting__twobody}\index{main\_example\_shooting\_twobody@{main\_example\_shooting\_twobody}}
+
+
+Main file for two-\/body orbit transfer problem setup.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemain__example__shooting__twobody_a4775bba4e2629805de5953d7d78ebd84}{residuals}} (v0, tspan, states0, statesf)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_af63ae49fc7e80268210e4fbf062623b8}\label{namespacemain__example__shooting__twobody_af63ae49fc7e80268210e4fbf062623b8}} 
+int {\bfseries sma} = 8000
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_aed6b054ebd8bdd90ccc2076963e62682}\label{namespacemain__example__shooting__twobody_aed6b054ebd8bdd90ccc2076963e62682}} 
+int {\bfseries ecc} = 0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a15d2a69cfae7d33360e303525811aaa8}\label{namespacemain__example__shooting__twobody_a15d2a69cfae7d33360e303525811aaa8}} 
+int {\bfseries rp} = sma$\ast$(1-\/ecc)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_af314c2fea52965c2af89adf23c7b6a20}\label{namespacemain__example__shooting__twobody_af314c2fea52965c2af89adf23c7b6a20}} 
+int {\bfseries P} = 2$\ast$np.\+pi$\ast$np.\+sqrt(sma$\ast$$\ast$3 / cn.\+mu)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_aa37b152acf45f87275afa6e2eb9a9fba}\label{namespacemain__example__shooting__twobody_aa37b152acf45f87275afa6e2eb9a9fba}} 
+{\bfseries tspan} = np.\+array(\mbox{[}0, 0.\+8$\ast$P\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a88d01cfa6875ad158f5ceb3d3d57b0b4}\label{namespacemain__example__shooting__twobody_a88d01cfa6875ad158f5ceb3d3d57b0b4}} 
+{\bfseries elm0} = np.\+array(\mbox{[}rp, ecc, np.\+deg2rad(10), np.\+deg2rad(0), np.\+deg2rad(0), np.\+deg2rad(0), 0, cn.\+mu\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a0c97a7c72d7fbfd9904a9020fd953a5e}\label{namespacemain__example__shooting__twobody_a0c97a7c72d7fbfd9904a9020fd953a5e}} 
+{\bfseries states0} = sp.\+conics(elm0,0)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_acd40097fb6d0b1062320e57ec1dda007}\label{namespacemain__example__shooting__twobody_acd40097fb6d0b1062320e57ec1dda007}} 
+{\bfseries elm1} = np.\+array(\mbox{[}rp, ecc, np.\+deg2rad(10), np.\+deg2rad(0), np.\+deg2rad(0), np.\+deg2rad(0), 0, cn.\+mu\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_ac61ed81e7d5d4a0122399ea565c84689}\label{namespacemain__example__shooting__twobody_ac61ed81e7d5d4a0122399ea565c84689}} 
+{\bfseries states1} = sp.\+conics(elm1,0)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a218024f604f425d85a0aa5b9490630a2}\label{namespacemain__example__shooting__twobody_a218024f604f425d85a0aa5b9490630a2}} 
+{\bfseries statesf} = sp.\+prop2b(cn.\+mu,states1,tspan\mbox{[}-\/1\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_acd1ad2357945d7bf84d2338c2d1e7490}\label{namespacemain__example__shooting__twobody_acd1ad2357945d7bf84d2338c2d1e7490}} 
+{\bfseries states0\+\_\+new} = np.\+zeros(6)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a39c1c4f84afa89d99bd3c197984b02bb}\label{namespacemain__example__shooting__twobody_a39c1c4f84afa89d99bd3c197984b02bb}} 
+{\bfseries v0\+\_\+guess} = states0\mbox{[}3\+:6\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a8654fda9325823ab2eccbd9f33dac90f}\label{namespacemain__example__shooting__twobody_a8654fda9325823ab2eccbd9f33dac90f}} 
+{\bfseries optres} = minimize(\mbox{\hyperlink{namespacemain__example__shooting__twobody_a4775bba4e2629805de5953d7d78ebd84}{residuals}},v0\+\_\+guess\mbox{[}0\+:3\mbox{]},args=(tspan,states0,statesf),method=\textquotesingle{}Nelder-\/Mead\textquotesingle{},tol=1e-\/13)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a05dbed45a315bf5152d4204e9a342c5f}\label{namespacemain__example__shooting__twobody_a05dbed45a315bf5152d4204e9a342c5f}} 
+{\bfseries sol} = integrator(eom\+\_\+twobody,(tspan\mbox{[}0\mbox{]},tspan\mbox{[}-\/1\mbox{]}),states0\+\_\+new,method=\textquotesingle{}L\+S\+O\+DA\textquotesingle{},rtol=1e-\/12)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_ae612d91d1b5fbe1f7e89bb63258dfd88}\label{namespacemain__example__shooting__twobody_ae612d91d1b5fbe1f7e89bb63258dfd88}} 
+{\bfseries fig} = plt.\+figure()
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a4d6dfc800d8f4303e4f53328a62f5fb4}\label{namespacemain__example__shooting__twobody_a4d6dfc800d8f4303e4f53328a62f5fb4}} 
+{\bfseries ax} = plt.\+axes(projection=\textquotesingle{}3d\textquotesingle{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Example shooting method using scipy.\+optimize and using the method of particular solutions. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000005}{Bug}}]No bugs known \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemain__example__shooting__twobody_a4775bba4e2629805de5953d7d78ebd84}\label{namespacemain__example__shooting__twobody_a4775bba4e2629805de5953d7d78ebd84}} 
+\index{main\_example\_shooting\_twobody@{main\_example\_shooting\_twobody}!residuals@{residuals}}
+\index{residuals@{residuals}!main\_example\_shooting\_twobody@{main\_example\_shooting\_twobody}}
+\doxysubsubsection{\texorpdfstring{residuals()}{residuals()}}
+{\footnotesize\ttfamily def main\+\_\+example\+\_\+shooting\+\_\+twobody.\+residuals (\begin{DoxyParamCaption}\item[{}]{v0,  }\item[{}]{tspan,  }\item[{}]{states0,  }\item[{}]{statesf }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes error between current final state and desired final state for the
+Keplerian Lambert type problem. This is a numerical method not an analytic
+Lambert solver.
+Parameters:
+===========
+v0      -- current initial velocity
+tspan   -- vector containing initial and final time
+states0 -- initial states
+statesf -- final states
+Returns:
+========
+res -- residual
+External:
+=========
+numpy, scipy.integrate
+\end{DoxyVerb}
+ 

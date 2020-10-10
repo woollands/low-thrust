@@ -1,0 +1,40 @@
+\hypertarget{namespacespacecraft}{}\doxysection{spacecraft Namespace Reference}
+\label{namespacespacecraft}\index{spacecraft@{spacecraft}}
+
+
+Spacecraft design parameters.  
+
+
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacespacecraft_a7526ffa539f29d1b28e195e9b900de43}\label{namespacespacecraft_a7526ffa539f29d1b28e195e9b900de43}} 
+float {\bfseries Isp} = 3100.\+0
+\item 
+\mbox{\Hypertarget{namespacespacecraft_aba964d6fe8b949fa19ca838386b74cc6}\label{namespacespacecraft_aba964d6fe8b949fa19ca838386b74cc6}} 
+float {\bfseries A} = 37.\+0
+\item 
+\mbox{\Hypertarget{namespacespacecraft_a5090db84c3ffed4a66d493e98b0dbc8a}\label{namespacespacecraft_a5090db84c3ffed4a66d493e98b0dbc8a}} 
+float {\bfseries eff} = 0.\+3
+\item 
+\mbox{\Hypertarget{namespacespacecraft_ae9ee5dd9ad01df12fa8bbc92e49dfbac}\label{namespacespacecraft_ae9ee5dd9ad01df12fa8bbc92e49dfbac}} 
+float {\bfseries Thr} = cn.\+Power$\ast$A$\ast$eff/Isp/cn.\+g0
+\item 
+\mbox{\Hypertarget{namespacespacecraft_a76442cc63c18bccd7ba09e1d53382639}\label{namespacespacecraft_a76442cc63c18bccd7ba09e1d53382639}} 
+float {\bfseries c\+\_\+m\+\_\+s} = Isp$\ast$cn.\+g0
+\item 
+\mbox{\Hypertarget{namespacespacecraft_ad36801f85d06d09592e711237d9a4008}\label{namespacespacecraft_ad36801f85d06d09592e711237d9a4008}} 
+float {\bfseries c} = c\+\_\+m\+\_\+s/cn.\+TU
+\item 
+\mbox{\Hypertarget{namespacespacecraft_ac761bf580b01f45b0d341229ee05164b}\label{namespacespacecraft_ac761bf580b01f45b0d341229ee05164b}} 
+tuple {\bfseries si2can} = (cn.\+TU$\ast$$\ast$2)/(cn.\+DU$\ast$1000.\+0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Physical spacecraft parameters necessary for inclusion in the optimal control simulation. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py 
+\end{DoxyPrecond}

@@ -1,0 +1,72 @@
+\hypertarget{namespaceeclipse__model}{}\doxysection{eclipse\+\_\+model Namespace Reference}
+\label{namespaceeclipse__model}\index{eclipse\_model@{eclipse\_model}}
+
+
+Eclipse model.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceeclipse__model_a7a8fac0e6e98bb3b381a1b7523b82ba6}{eclipse\+\_\+grazing\+\_\+goat}} (t, X, rho)
+\item 
+def \mbox{\hyperlink{namespaceeclipse__model_a0180a04f63856f61cddbc15468c8abaa}{eclipse\+\_\+cylindrical}} (t, X, rho)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Grazing goat eclipse model and cylindrical eclipse model \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000001}{Bug}}]No bugs known \end{DoxyRefDesc}
+\begin{DoxyWarning}{Warning}
+A better smoothing technique is required to allow full use of the grazing goat model 
+\end{DoxyWarning}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceeclipse__model_a0180a04f63856f61cddbc15468c8abaa}\label{namespaceeclipse__model_a0180a04f63856f61cddbc15468c8abaa}} 
+\index{eclipse\_model@{eclipse\_model}!eclipse\_cylindrical@{eclipse\_cylindrical}}
+\index{eclipse\_cylindrical@{eclipse\_cylindrical}!eclipse\_model@{eclipse\_model}}
+\doxysubsubsection{\texorpdfstring{eclipse\_cylindrical()}{eclipse\_cylindrical()}}
+{\footnotesize\ttfamily def eclipse\+\_\+model.\+eclipse\+\_\+cylindrical (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{X,  }\item[{}]{rho }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Smoothed cylindrical eclipse model
+Parameters:
+===========
+t   -- time
+X   -- state vector
+rho -- switch smooting parameter
+Returns:
+========
+PA -- available power
+External:
+=========
+numpy, const.py
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceeclipse__model_a7a8fac0e6e98bb3b381a1b7523b82ba6}\label{namespaceeclipse__model_a7a8fac0e6e98bb3b381a1b7523b82ba6}} 
+\index{eclipse\_model@{eclipse\_model}!eclipse\_grazing\_goat@{eclipse\_grazing\_goat}}
+\index{eclipse\_grazing\_goat@{eclipse\_grazing\_goat}!eclipse\_model@{eclipse\_model}}
+\doxysubsubsection{\texorpdfstring{eclipse\_grazing\_goat()}{eclipse\_grazing\_goat()}}
+{\footnotesize\ttfamily def eclipse\+\_\+model.\+eclipse\+\_\+grazing\+\_\+goat (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{X,  }\item[{}]{rho }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Smoothed grazing goat eclipse model
+Parameters:
+===========
+t   -- time
+X   -- state vector
+rho -- switch smooting parameter
+Returns:
+========
+TF    -- transit fraction
+PA    -- available power
+zetaE -- eclipse smoothing parameter
+External:
+=========
+numpy, const.py
+\end{DoxyVerb}
+ 

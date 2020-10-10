@@ -1,0 +1,77 @@
+\hypertarget{namespacemps}{}\doxysection{mps Namespace Reference}
+\label{namespacemps}\index{mps@{mps}}
+
+
+Method of particular solutions.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemps_ae3e97a15d6ac768145e29aefdb0aab17}{mps\+\_\+twobody}} (tspan, states0, statesf)
+\item 
+def \mbox{\hyperlink{namespacemps_adc0499ba07947e5b9965ee81ddadeec6}{mps\+\_\+mee\+\_\+ocp}} (tspan, p0, states0, statesf, rho, eclipse, mps\+\_\+tol)
+\begin{DoxyCompactList}\small\item\em @njit \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Solves two-\/point boundary value problems \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py, spipy.\+integrate 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000006}{Bug}}]No bugs known \end{DoxyRefDesc}
+\begin{DoxyWarning}{Warning}
+May fail to converge for poor initial guess 
+\end{DoxyWarning}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemps_adc0499ba07947e5b9965ee81ddadeec6}\label{namespacemps_adc0499ba07947e5b9965ee81ddadeec6}} 
+\index{mps@{mps}!mps\_mee\_ocp@{mps\_mee\_ocp}}
+\index{mps\_mee\_ocp@{mps\_mee\_ocp}!mps@{mps}}
+\doxysubsubsection{\texorpdfstring{mps\_mee\_ocp()}{mps\_mee\_ocp()}}
+{\footnotesize\ttfamily def mps.\+mps\+\_\+mee\+\_\+ocp (\begin{DoxyParamCaption}\item[{}]{tspan,  }\item[{}]{p0,  }\item[{}]{states0,  }\item[{}]{statesf,  }\item[{}]{rho,  }\item[{}]{eclipse,  }\item[{}]{mps\+\_\+tol }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Shooting method to solve min-fuel optimal control prolem
+Parameters:
+===========
+tspan   -- vector containing initial and final time
+p0      -- initial costates guess
+states0 -- initial state vector (modified equinoctial elements)
+statesf -- final state vector (modified equinoctial elements)
+rho     -- switch smoothing parameter
+eclipse -- boolean (true or false)
+mps_tol -- user specified convergence tolerance
+Returns:
+========
+traj    -- optimal trajectory
+p0      -- initial costate for optimal trajectory
+mps_err -- shooting method convergence error
+External:
+=========
+numpy, const.py, spipy.integrate
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacemps_ae3e97a15d6ac768145e29aefdb0aab17}\label{namespacemps_ae3e97a15d6ac768145e29aefdb0aab17}} 
+\index{mps@{mps}!mps\_twobody@{mps\_twobody}}
+\index{mps\_twobody@{mps\_twobody}!mps@{mps}}
+\doxysubsubsection{\texorpdfstring{mps\_twobody()}{mps\_twobody()}}
+{\footnotesize\ttfamily def mps.\+mps\+\_\+twobody (\begin{DoxyParamCaption}\item[{}]{tspan,  }\item[{}]{states0,  }\item[{}]{statesf }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Shooting method to solve Lambert's problem
+Parameters:
+===========
+tspan   -- vector containing initial and final time
+states0 -- initial state vector (position & velocity)
+statesf -- final state vector (position & velocity)
+Returns:
+========
+v0      -- initial velocity for transfer trajectory
+mps_err -- shooting method convergence error
+External:
+=========
+numpy, const.py, spipy.integrate
+\end{DoxyVerb}
+ 

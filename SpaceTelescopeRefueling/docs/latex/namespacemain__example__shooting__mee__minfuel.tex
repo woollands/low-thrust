@@ -1,0 +1,124 @@
+\hypertarget{namespacemain__example__shooting__mee__minfuel}{}\doxysection{main\+\_\+example\+\_\+shooting\+\_\+mee\+\_\+minfuel Namespace Reference}
+\label{namespacemain__example__shooting__mee__minfuel}\index{main\_example\_shooting\_mee\_minfuel@{main\_example\_shooting\_mee\_minfuel}}
+
+
+Main file for mee, low-\/thrust, min-\/fuel, orbit transfer problem setup.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemain__example__shooting__mee__minfuel_ac4c9572a44a52d5821212c7e1ea5fc06}{residuals\+\_\+mee\+\_\+ocp}} (p0, tspan, mee0, meef, rho)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a2d351c62eced4078e37c55f46bc0832f}\label{namespacemain__example__shooting__mee__minfuel_a2d351c62eced4078e37c55f46bc0832f}} 
+{\bfseries tspan} = np.\+array(\mbox{[}0,642.\+54\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a7258540b14bc0d8cf599b19d43fd0c86}\label{namespacemain__example__shooting__mee__minfuel_a7258540b14bc0d8cf599b19d43fd0c86}} 
+int {\bfseries sma} = 24505/cn.\+DU
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a20323bf09fa0880235b3e21ff39daa94}\label{namespacemain__example__shooting__mee__minfuel_a20323bf09fa0880235b3e21ff39daa94}} 
+float {\bfseries ecc} = 0.\+725
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a45f788ba15ae038431a26d68aa0d6d51}\label{namespacemain__example__shooting__mee__minfuel_a45f788ba15ae038431a26d68aa0d6d51}} 
+int {\bfseries inc} = 7
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a9bafd209c06f20b8d0f03554dcf08486}\label{namespacemain__example__shooting__mee__minfuel_a9bafd209c06f20b8d0f03554dcf08486}} 
+int {\bfseries Om} = 0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a6ea50ac8b6077f4bc3390dd3c2794008}\label{namespacemain__example__shooting__mee__minfuel_a6ea50ac8b6077f4bc3390dd3c2794008}} 
+int {\bfseries w} = 0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_aba337ed43ca235e0f4103f222a65dc0d}\label{namespacemain__example__shooting__mee__minfuel_aba337ed43ca235e0f4103f222a65dc0d}} 
+int {\bfseries M} = 0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a36a270211f48389d7e4425ffc3d4e7f8}\label{namespacemain__example__shooting__mee__minfuel_a36a270211f48389d7e4425ffc3d4e7f8}} 
+int {\bfseries m0} = 100
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a9ad3406cb13126b4638bed467afef0f2}\label{namespacemain__example__shooting__mee__minfuel_a9ad3406cb13126b4638bed467afef0f2}} 
+list {\bfseries mee0} = \mbox{[}p, f, g, h, k, L, m0\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a5051ddc85bb853365a10facc00bcac1f}\label{namespacemain__example__shooting__mee__minfuel_a5051ddc85bb853365a10facc00bcac1f}} 
+list {\bfseries meef} = \mbox{[}p, f, g, h, k, L\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a2f5e6b217b476a66f00999429815e55d}\label{namespacemain__example__shooting__mee__minfuel_a2f5e6b217b476a66f00999429815e55d}} 
+{\bfseries p0} = np.\+zeros(7)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a20d75e6055e725badc002b9e872b60e4}\label{namespacemain__example__shooting__mee__minfuel_a20d75e6055e725badc002b9e872b60e4}} 
+int {\bfseries rho} = 1
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a132ae2a558def113b5d72ab69b569768}\label{namespacemain__example__shooting__mee__minfuel_a132ae2a558def113b5d72ab69b569768}} 
+{\bfseries p0\+\_\+guess} = p0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a0692f05ca39ff69fa6688d69ad1dc95c}\label{namespacemain__example__shooting__mee__minfuel_a0692f05ca39ff69fa6688d69ad1dc95c}} 
+{\bfseries optres} = minimize(residuals,p0\+\_\+guess\mbox{[}0\+:7\mbox{]},args=(tspan,mee0,meef,rho),method=\textquotesingle{}Nelder-\/Mead\textquotesingle{},jac=False,tol=1e-\/2)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a01784b1538a474c7b4eb1d582ade6666}\label{namespacemain__example__shooting__mee__minfuel_a01784b1538a474c7b4eb1d582ade6666}} 
+float {\bfseries rho\+\_\+rate} = 0.\+9
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a444716aad967e40fd2e573671c6a7eec}\label{namespacemain__example__shooting__mee__minfuel_a444716aad967e40fd2e573671c6a7eec}} 
+int {\bfseries mps\+\_\+tol} = 1e-\/4
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_ac479d450512d5493cd56f57cd6fe9073}\label{namespacemain__example__shooting__mee__minfuel_ac479d450512d5493cd56f57cd6fe9073}} 
+int {\bfseries iter} = 0
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_adac0af102984e0652569c12488f692d6}\label{namespacemain__example__shooting__mee__minfuel_adac0af102984e0652569c12488f692d6}} 
+bool {\bfseries eclipse} = False
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_abcc5fdf971aebb213e7e7ecb1f85a1a5}\label{namespacemain__example__shooting__mee__minfuel_abcc5fdf971aebb213e7e7ecb1f85a1a5}} 
+{\bfseries mee0\+\_\+new} = np.\+zeros(14)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_af0ff7dc25a964e9523295bdb07e7ba02}\label{namespacemain__example__shooting__mee__minfuel_af0ff7dc25a964e9523295bdb07e7ba02}} 
+{\bfseries sol} = integrator(lambda t,y\+: eom\+\_\+mee\+\_\+twobody\+J2\+\_\+minfuel(t,y,rho,eclipse),tspan,mee0\+\_\+new,method=\textquotesingle{}L\+S\+O\+DA\textquotesingle{},rtol=1e-\/13)
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_a152449c9aef90b0e61652de0ea9bbce5}\label{namespacemain__example__shooting__mee__minfuel_a152449c9aef90b0e61652de0ea9bbce5}} 
+{\bfseries data} = np.\+array(soln.\+y,dtype=float).T
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_adcce1cd5514760d6ecd64528f4dbc498}\label{namespacemain__example__shooting__mee__minfuel_adcce1cd5514760d6ecd64528f4dbc498}} 
+{\bfseries time} = np.\+array(soln.\+t,dtype=float).T
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_ae4bee4852ef8d51f467d8e213c8717fc}\label{namespacemain__example__shooting__mee__minfuel_ae4bee4852ef8d51f467d8e213c8717fc}} 
+{\bfseries df} = pd.\+Data\+Frame(np.\+array(\mbox{[}time,data\mbox{]}).T,columns=\mbox{[}\textquotesingle{}time\textquotesingle{},\textquotesingle{}trajectory\textquotesingle{}\mbox{]})
+\item 
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_ad5d3cd4413dd4940367247010181f9f1}\label{namespacemain__example__shooting__mee__minfuel_ad5d3cd4413dd4940367247010181f9f1}} 
+{\bfseries index}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Example shooting method using scipy.\+optimize and using the method of particular solutions. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000004}{Bug}}]No bugs known \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemain__example__shooting__mee__minfuel_ac4c9572a44a52d5821212c7e1ea5fc06}\label{namespacemain__example__shooting__mee__minfuel_ac4c9572a44a52d5821212c7e1ea5fc06}} 
+\index{main\_example\_shooting\_mee\_minfuel@{main\_example\_shooting\_mee\_minfuel}!residuals\_mee\_ocp@{residuals\_mee\_ocp}}
+\index{residuals\_mee\_ocp@{residuals\_mee\_ocp}!main\_example\_shooting\_mee\_minfuel@{main\_example\_shooting\_mee\_minfuel}}
+\doxysubsubsection{\texorpdfstring{residuals\_mee\_ocp()}{residuals\_mee\_ocp()}}
+{\footnotesize\ttfamily def main\+\_\+example\+\_\+shooting\+\_\+mee\+\_\+minfuel.\+residuals\+\_\+mee\+\_\+ocp (\begin{DoxyParamCaption}\item[{}]{p0,  }\item[{}]{tspan,  }\item[{}]{mee0,  }\item[{}]{meef,  }\item[{}]{rho }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes error between current final state and desired final state for the
+low thrust, min-fuel, optimal trajectory using modified equinoctial elements.
+Parameters:
+===========
+p0    -- current initial costate
+tspan -- vector containing initial and final time
+mee0  -- initial states (modified equinoctial elements)
+meef  -- final states (modified equinoctial elements)
+rho   -- switch smoothing parameter
+Returns:
+========
+res -- residual
+External:
+=========
+numpy, scipy.integrate
+\end{DoxyVerb}
+ 

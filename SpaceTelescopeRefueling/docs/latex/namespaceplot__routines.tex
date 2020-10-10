@@ -1,0 +1,68 @@
+\hypertarget{namespaceplot__routines}{}\doxysection{plot\+\_\+routines Namespace Reference}
+\label{namespaceplot__routines}\index{plot\_routines@{plot\_routines}}
+
+
+Plot solution.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespaceplot__routines_abe6e08d9e3d8f3df142b4eb07ef800e7}{plot\+\_\+mee\+\_\+minfuel}} (t, data, rho, eclipse)
+\item 
+def \mbox{\hyperlink{namespaceplot__routines_a8941972a9b754e92ebbd78ad46a3f5ab}{draw\+Earth}} (Radius)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Plots the states, costates switch function, thrust profile and 3D trajectory \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, pandas, mpl\+\_\+toolkits, matplotlib, P\+IL 
+\end{DoxyPrecond}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000007}{Bug}}]No bugs known \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceplot__routines_a8941972a9b754e92ebbd78ad46a3f5ab}\label{namespaceplot__routines_a8941972a9b754e92ebbd78ad46a3f5ab}} 
+\index{plot\_routines@{plot\_routines}!drawEarth@{drawEarth}}
+\index{drawEarth@{drawEarth}!plot\_routines@{plot\_routines}}
+\doxysubsubsection{\texorpdfstring{drawEarth()}{drawEarth()}}
+{\footnotesize\ttfamily def plot\+\_\+routines.\+draw\+Earth (\begin{DoxyParamCaption}\item[{}]{Radius }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes meshgrid for plotting the Earth
+Parameters:
+===========
+Radius -- radius of Earth
+Returns:
+========
+x   -- x position
+y   -- y position
+z   -- z position
+img -- RGB values
+External:
+=========
+numpy, PIL, blue_marble.jpg
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceplot__routines_abe6e08d9e3d8f3df142b4eb07ef800e7}\label{namespaceplot__routines_abe6e08d9e3d8f3df142b4eb07ef800e7}} 
+\index{plot\_routines@{plot\_routines}!plot\_mee\_minfuel@{plot\_mee\_minfuel}}
+\index{plot\_mee\_minfuel@{plot\_mee\_minfuel}!plot\_routines@{plot\_routines}}
+\doxysubsubsection{\texorpdfstring{plot\_mee\_minfuel()}{plot\_mee\_minfuel()}}
+{\footnotesize\ttfamily def plot\+\_\+routines.\+plot\+\_\+mee\+\_\+minfuel (\begin{DoxyParamCaption}\item[{}]{t,  }\item[{}]{data,  }\item[{}]{rho,  }\item[{}]{eclipse }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Plot solution
+Parameters:
+===========
+t       -- time
+data    -- state and costate time history
+rho     --
+eclipse --
+Returns:
+========
+External:
+=========
+numpy, pandas, mpl_toolkits, matplotlib
+\end{DoxyVerb}
+ 

@@ -1,0 +1,40 @@
+\hypertarget{namespacespacecraft__parameter}{}\doxysection{spacecraft\+\_\+parameter Namespace Reference}
+\label{namespacespacecraft__parameter}\index{spacecraft\_parameter@{spacecraft\_parameter}}
+
+
+Spacecraft design parameters.  
+
+
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_a8d0652d0e78abb4aac6bf78ef14e294f}\label{namespacespacecraft__parameter_a8d0652d0e78abb4aac6bf78ef14e294f}} 
+float {\bfseries Isp} = 3100.\+0
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_a3e987c4884ea872ce2f4e0548fc6a751}\label{namespacespacecraft__parameter_a3e987c4884ea872ce2f4e0548fc6a751}} 
+float {\bfseries A} = 37.\+0
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_af550c3890ba4c572db51cc3b7ce80fd2}\label{namespacespacecraft__parameter_af550c3890ba4c572db51cc3b7ce80fd2}} 
+float {\bfseries eff} = 0.\+3
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_afb4e989bd6b62f4b2cb2656cdd40ffd6}\label{namespacespacecraft__parameter_afb4e989bd6b62f4b2cb2656cdd40ffd6}} 
+float {\bfseries Thr} = cn.\+Power$\ast$A$\ast$eff/Isp/cn.\+g0
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_a21d14748d12f0ed89e856f6b000d6984}\label{namespacespacecraft__parameter_a21d14748d12f0ed89e856f6b000d6984}} 
+float {\bfseries c\+\_\+m\+\_\+s} = Isp$\ast$cn.\+g0
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_a96f1987b430e94274a516b1bd3d9c6fe}\label{namespacespacecraft__parameter_a96f1987b430e94274a516b1bd3d9c6fe}} 
+float {\bfseries c} = c\+\_\+m\+\_\+s/cn.\+TU
+\item 
+\mbox{\Hypertarget{namespacespacecraft__parameter_a12f0d446b160bfd81e39eff879f45e64}\label{namespacespacecraft__parameter_a12f0d446b160bfd81e39eff879f45e64}} 
+tuple {\bfseries si2can} = (cn.\+TU$\ast$$\ast$2)/(cn.\+DU$\ast$1000.\+0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Physical spacecraft parameters necessary for inclusion in the optimal control simulation. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyPrecond}{Precondition}
+numpy, const.\+py 
+\end{DoxyPrecond}

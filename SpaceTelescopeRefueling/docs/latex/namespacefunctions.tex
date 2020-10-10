@@ -1,0 +1,147 @@
+\hypertarget{namespacefunctions}{}\doxysection{functions Namespace Reference}
+\label{namespacefunctions}\index{functions@{functions}}
+
+
+Astrodynamics functions.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacefunctions_ac584a079f8a52fddb0d76a19a5a9593a}{mee2rv}} (p, f, g, h, k, L)
+\item 
+def \mbox{\hyperlink{namespacefunctions_a5a446c86a4638222b70bbd1520e4a5cd}{classical2mee}} (a, e, inc, Om, w, nu)
+\item 
+def \mbox{\hyperlink{namespacefunctions_adc7666030ac7bd34501f73e2d59ef9ca}{inertial2radial}} (r, v)
+\item 
+def \mbox{\hyperlink{namespacefunctions_a32d5954b6b3ef3e01e33a6b104523726}{switch\+\_\+function}} (data, rho)
+\item 
+def \mbox{\hyperlink{namespacefunctions_a47b4d2d6122b7fa2e361efda5d519016}{thrust\+\_\+angle}} (data, rho, eclipse)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Useful astrodynamics functions, element conversions, switch function computation etc. \begin{DoxyAuthor}{Author}
+Robyn Woollands 
+\end{DoxyAuthor}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000003}{Bug}}]No bugs known \end{DoxyRefDesc}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacefunctions_a5a446c86a4638222b70bbd1520e4a5cd}\label{namespacefunctions_a5a446c86a4638222b70bbd1520e4a5cd}} 
+\index{functions@{functions}!classical2mee@{classical2mee}}
+\index{classical2mee@{classical2mee}!functions@{functions}}
+\doxysubsubsection{\texorpdfstring{classical2mee()}{classical2mee()}}
+{\footnotesize\ttfamily def functions.\+classical2mee (\begin{DoxyParamCaption}\item[{}]{a,  }\item[{}]{e,  }\item[{}]{inc,  }\item[{}]{Om,  }\item[{}]{w,  }\item[{}]{nu }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Converts classical orbit elements to modified equinoctial elements
+Parameters:
+===========
+a   -- semimajor axis
+e   -- eccentricity
+inc -- inclination
+Om  -- right ascension of ascending node
+w   -- argument of perigee
+nu  -- true anomaly
+Returns:
+========
+p  -- semilatus rectum
+f  -- e*cos(w+Omega)
+g  -- e*sin(w+Omega)
+h  -- tan(i/2)*cos(Omega)
+k  -- tan(i/2)*sin(Omega)
+L  -- true longitude
+External:
+=========
+numpy
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacefunctions_adc7666030ac7bd34501f73e2d59ef9ca}\label{namespacefunctions_adc7666030ac7bd34501f73e2d59ef9ca}} 
+\index{functions@{functions}!inertial2radial@{inertial2radial}}
+\index{inertial2radial@{inertial2radial}!functions@{functions}}
+\doxysubsubsection{\texorpdfstring{inertial2radial()}{inertial2radial()}}
+{\footnotesize\ttfamily def functions.\+inertial2radial (\begin{DoxyParamCaption}\item[{}]{r,  }\item[{}]{v }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes transformation nmatrix to convert vectors from ECI to LVLH
+Parameters:
+===========
+r -- ECI position
+v -- ECI velocity
+Returns:
+========
+M -- 3x3 trans matrix
+External:
+=========
+numpy
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacefunctions_ac584a079f8a52fddb0d76a19a5a9593a}\label{namespacefunctions_ac584a079f8a52fddb0d76a19a5a9593a}} 
+\index{functions@{functions}!mee2rv@{mee2rv}}
+\index{mee2rv@{mee2rv}!functions@{functions}}
+\doxysubsubsection{\texorpdfstring{mee2rv()}{mee2rv()}}
+{\footnotesize\ttfamily def functions.\+mee2rv (\begin{DoxyParamCaption}\item[{}]{p,  }\item[{}]{f,  }\item[{}]{g,  }\item[{}]{h,  }\item[{}]{k,  }\item[{}]{L }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Converts modified equinoctial elements to cartesian coordinates.
+Parameters:
+===========
+p  -- semilatus rectum
+f  -- e*cos(w+Omega)
+g  -- e*sin(w+Omega)
+h  -- tan(i/2)*cos(Omega)
+k  -- tan(i/2)*sin(Omega)
+L  -- true longitude
+Returns:
+========
+r -- position
+v -- velocity
+External:
+=========
+numpy, const.py
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacefunctions_a32d5954b6b3ef3e01e33a6b104523726}\label{namespacefunctions_a32d5954b6b3ef3e01e33a6b104523726}} 
+\index{functions@{functions}!switch\_function@{switch\_function}}
+\index{switch\_function@{switch\_function}!functions@{functions}}
+\doxysubsubsection{\texorpdfstring{switch\_function()}{switch\_function()}}
+{\footnotesize\ttfamily def functions.\+switch\+\_\+function (\begin{DoxyParamCaption}\item[{}]{data,  }\item[{}]{rho }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes switch function from states and costates
+Parameters:
+===========
+data -- time history of states and costates
+rho  -- switch smoothing parameter
+Returns:
+========
+S     -- switch function
+delta -- engine throttle
+BTL   -- matrix (B.T * lamba)
+External:
+=========
+numpy, spacecraft_params.py
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacefunctions_a47b4d2d6122b7fa2e361efda5d519016}\label{namespacefunctions_a47b4d2d6122b7fa2e361efda5d519016}} 
+\index{functions@{functions}!thrust\_angle@{thrust\_angle}}
+\index{thrust\_angle@{thrust\_angle}!functions@{functions}}
+\doxysubsubsection{\texorpdfstring{thrust\_angle()}{thrust\_angle()}}
+{\footnotesize\ttfamily def functions.\+thrust\+\_\+angle (\begin{DoxyParamCaption}\item[{}]{data,  }\item[{}]{rho,  }\item[{}]{eclipse }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Computes the optimal instantaneous thrust angle
+Parameters:
+===========
+data    -- time history of states and costates
+rho     -- switch smoothing parameter
+eclipse -- boolean (true or false)
+Returns:
+========
+r       -- Cartesian position
+v       -- Cartesian velocity
+u_inert -- inertial thrust vector
+u_lvlh  -- LVLH thrust vector
+S       -- switch function
+F       -- instantaneous thrust magnitude
+Pa      -- Power available
+delta   -- engine throttle
+zeta    -- eclipse smoothing parameter
+External:
+=========
+numpy, const.py, spacecraft_params.py
+\end{DoxyVerb}
+ 
