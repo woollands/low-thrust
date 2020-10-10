@@ -15,7 +15,6 @@ import spiceypy as sp
 from scipy.integrate import solve_ivp as integrator
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
-from autograd import jacobian
 import const as cn
 import sys
 from mps import mps_mee_ocp
@@ -24,13 +23,62 @@ from functions import classical2mee
 from functions import mee2rv
 from functions import switch_function
 from plot_routines import plot_mee_minfuel
+from mee_ocp_finite_difference import mee_ocp_central_difference
 import spacecraft_params as sc
 
 # Load Spice Kernels
 sp.furnsh( "/Users/robynmw/Dropbox/CODE/mice/kernels/naif0012.tls" )
 sp.furnsh( "/Users/robynmw/Dropbox/CODE/mice/kernels/de438.bsp" )
 
-def residuals_mee_ocp(p0,tspan,mee0,meef,rho):
+def mee_ocp_central_difference(x):
+    """
+    Central different computation of the Jacobian of the cost funtion.
+    Parameters:
+    ===========
+    tspan   -- vector containting initial and final time
+    p0      -- initial costates guess
+    states0 -- initial state vector (modified equinoctial elements)
+    rho     -- switch smoothing parameter
+    eclipse -- boolean (true or false)
+    Returns:
+    ========
+    Jac -- Jacobian
+    External:
+    =========
+    numpy, spipy.integrate
+    """
+
+    # TEMP
+    tspan = np.array([0,642.54])
+    rho = 1
+    eclipse = False
+    meef = np.array([6.610864583184714, 0.0, 0.0, 0.0, 0.0, 0.0])
+
+    # Initialization
+    IC1  = np.zeros(14)
+    IC2  = np.zeros(14)
+    grad = np.zeros(7)
+    DEL  = 1e-5*(x[7:14]/np.linalg.norm(x[7:14]))
+
+    for i in range(0,7):
+
+        IC1 = x
+        IC2 = x
+        IC1[i+7] = IC1[i+7]+DEL[i]
+        IC2[i+7] = IC2[i+7]-DEL[i]
+
+        # Integrate Dynamics
+        sol1 = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,IC1,method='LSODA',rtol=1e-13)
+        sol2 = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,IC2,method='LSODA',rtol=1e-13)
+
+        res1 = np.linalg.norm(meef[0:5] - sol1.y[0:5,-1])
+        res2 = np.linalg.norm(meef[0:5] - sol2.y[0:5,-1])
+
+        grad[i] = (res1-res2)/(2*DEL[i])
+
+    return grad
+
+def residuals_mee_ocp(p0,tspan,mee0,meef,rho,eclipse):
     """
     Computes error between current final state and desired final state for the
     low thrust, min-fuel, optimal trajectory using modified equinoctial elements.
@@ -53,9 +101,10 @@ def residuals_mee_ocp(p0,tspan,mee0,meef,rho):
     states_in[0:7] = mee0[0:7]
     states_in[7:14] = p0[0:7]
     # sol = integrator(eom_mee_twobody_minfuel,(tspan[0],tspan[-1]),states_in,method='LSODA',rtol=1e-12)
-    sol = integrator(lambda t,y: eom_mee_twobody_minfuel(t,y,rho),tspan,states_in,method='LSODA',rtol=1e-12)
+    sol = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,states_in,method='LSODA',rtol=1e-12)
     # Free final mass and free final true longitude (angle)
     res = np.linalg.norm(meef[0:5] - sol.y[0:5,-1])
+    print(res)
     return res
 
 # Time
@@ -81,19 +130,21 @@ M   = 0
 meef = [p, f, g, h, k, L]
 # Costate Guess
 p0 = np.zeros(7)
-p0[0] = -4.620949386264961
-p0[1] = -12.037907266888872
-p0[2] = 0.208961742408408
-p0[3] = 5.946490544006020
-p0[4] = 0.042440374825155
-p0[5] = 0.002470486378745
-p0[6] = 0.117893582793439
-# p0 = np.array([0.01, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
+# p0[0] = -4.620949386264961
+# p0[1] = -12.037907266888872
+# p0[2] = 0.208961742408408
+# p0[3] = 5.946490544006020
+# p0[4] = 0.042440374825155
+# p0[5] = 0.002470486378745
+# p0[6] = 0.117893582793439
+p0 = 0.1*np.random.rand(7)
 
 # Solve Min-Fuel Low Thrust
 rho = 1 # Continuation Parameter (engine throttle)
+eclipse = False
 p0_guess = p0
-optres = minimize(residuals,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',jac=False,tol=1e-2)
+# optres = minimize(residuals_mee_ocp,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',tol=1e-2)
+optres = minimize(residuals_mee_ocp,p0_guess[0:7],args=(tspan,mee0,meef,rho,eclipse),method='BFGS',tol=1e-2)
 print("opt_err:",optres.fun)
 # print(states0_new)
 p0 = optres.x
