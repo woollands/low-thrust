@@ -8,8 +8,10 @@
 */
 
 // #include "../../../../cspice/src/cspice/conics_c.c"
-# include "../../../../../../Dropbox/CODE/cspice/src/cspice/furnsh_c.c"
+// # include "../../../../../../Dropbox/CODE/cspice/src/cspice/furnsh_c.c"
 // # include "../../../../../../Dropbox/CODE/cspice/src/cspice/str2et_c.c"
+
+#include "../../../../../Dropbox/CODE/cspice/src/cspice/SpiceUsr.h"
 
 #include "const.hpp"
 #include "c_functions.hpp"

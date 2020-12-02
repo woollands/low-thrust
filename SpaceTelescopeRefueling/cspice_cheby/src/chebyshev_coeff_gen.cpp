@@ -14,7 +14,8 @@
 #include "const.hpp"
 #include "c_functions.hpp"
 #include "lsq_chebyshev_fit.hpp"
-#include "../../../../../../Dropbox/CODE/cspice/src/cspice/spkezr_c.c"
+// #include "../../../../../../Dropbox/CODE/cspice/src/cspice/spkezr_c.c"
+#include "../../../../../Dropbox/CODE/cspice/src/cspice/SpiceUsr.h"
 
 void chebyshev_coeff_gen( int N, double t0, double tf, double* coeff ){
 
@@ -31,7 +32,6 @@ void chebyshev_coeff_gen( int N, double t0, double tf, double* coeff ){
   // Compute Chebyshev Cosine Nodes
   double w1 = (tf+t0)/2.0;
   double w2 = (tf-t0)/2.0;
-
   double tau[N+1];
   memset( tau, 0.0, ((N+1)*sizeof(double)));
   double time[(N+1)];
