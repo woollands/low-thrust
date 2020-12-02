@@ -12,6 +12,7 @@ import const as cn
 from eom import eom_twobody
 from eom import eom_mee_twobodyJ2_minfuel
 from numba import njit
+import sys
 
 __all__ = ["mps_twobody","mps_mee_ocp"]
 
@@ -100,16 +101,21 @@ def mps_mee_ocp(tspan,p0,states0,statesf,rho,eclipse,mps_tol):
     mps_err = 1
     cnt     = 0
     IC      = np.zeros(14)
-    Del     = np.zeros((5,7))
-    Del_plus  = np.zeros((5,7))
-    Del_minus = np.zeros((5,7))
+    # Del     = np.zeros((5,7))
+    # Del_plus  = np.zeros((5,7))
+    # Del_minus = np.zeros((5,7))
+    # Del       = np.zeros((7,7))
+    Del       = np.zeros((6,7))
+    Del_plus  = np.zeros((7,7))
+    Del_minus = np.zeros((7,7))
     DEL     = np.array([1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5, 1e-5])
     # p0      = states0[7:14]
-    MatInv  = np.zeros((7,5))
-    res     = np.zeros(7)
+    MatInv  = np.zeros((7,6))
+    # MatInv  = np.zeros((7,7))
+    res     = np.zeros(6)
     del_p0  = np.zeros(7)
     while mps_err > mps_tol and cnt < 30:
-        for tcnt in range(0,15):
+        for tcnt in range(8): #range(0,15):
             if tcnt == 0:
                 IC[0:7] = states0[0:7]
                 IC[7:14] = p0[0:7]
@@ -117,33 +123,40 @@ def mps_mee_ocp(tspan,p0,states0,statesf,rho,eclipse,mps_tol):
                 IC[0:7] = states0[0:7]
                 IC[7:14] = p0[0:7]
                 IC[tcnt+6] = IC[tcnt+6]+DEL[tcnt-1]
-            elif tcnt > 7 and tcnt < 15:
-                IC[0:7] = states0[0:7]
-                IC[7:14] = p0[0:7]
-                IC[tcnt+6-7] = IC[tcnt+6-7]-DEL[tcnt-1-7]
+            # elif tcnt > 7 and tcnt < 15:
+            #     IC[0:7] = states0[0:7]
+            #     IC[7:14] = p0[0:7]
+            #     IC[tcnt+6-7] = IC[tcnt+6-7]-DEL[tcnt-1-7]
 
             # Integrate Dynamics
             sol = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,IC,method='LSODA',rtol=1e-13)
             # sol = integrator(eom_mee_twobody_minfuel,(tspan[0],tspan[-1]),IC,method='LSODA',rtol=1e-12)
-            soln = sol.y[0:7,-1]
+            soln = sol.y[:,-1]
             if tcnt == 0:
                 ref  = soln
                 traj = sol
             elif tcnt > 0 and tcnt < 8:
-                # Del_plus[0:5,tcnt-1] = (soln[0:5]-ref[0:5])/DEL  # Free final mass & free final true longitude (angle)
-                Del_plus[0:5,tcnt-1] = soln[0:5]  # Free final mass & free final true longitude (angle)
-            elif tcnt > 7 and tcnt < 15:
-                Del_minus[0:5,tcnt-1-7] = soln[0:5]  # Free final mass & free final true longitude (angle)
+                Del[0:5,tcnt-1] = (soln[0:5]-ref[0:5])/1e-5  # Free final mass & free final true longitude (angle)
+                Del[5,tcnt-1] = (soln[13]-ref[13])/1e-5  # Free final mass & free final true longitude (angle)
+            #     Del_plus[0:5,tcnt-1] = soln[0:5]  # Free final mass & free final true longitude (angle)
+            #     Del_plus[5:7,tcnt-1] = soln[12:14]  # Free final mass & free final true longitude (angle)
+            # elif tcnt > 7 and tcnt < 15:
+            #     Del_minus[0:5,tcnt-1-7] = soln[0:5]  # Free final mass & free final true longitude (angle)
+            #     Del_minus[5:7,tcnt-1-7] = soln[12:14]  # Free final mass & free final true longitude (angle)
 
         # Compute Updated Variables
-        for i in range(5):
-            for j in range(7):
-                Del[i,j] = (Del_plus[i,j] - Del_minus[i,j])/(2*DEL[j])
-        MatInv = np.linalg.pinv(Del)
-        res    = statesf[0:5] - ref[0:5]     # Free final mass & free final true longitude (angle)
-        del_p0 = np.matmul(MatInv,res)
-        p0     = p0 + del_p0
-        DEL    = 1e-5*(p0/np.linalg.norm(p0))
+        # for i in range(7): #range(5):
+        #     for j in range(7):
+        #         # Del[i,j] = (Del_plus[i,j] - Del_minus[i,j])/(2*DEL[j])
+        #         Del[i,j] = Del[i,j]/DEL[j]
+
+        # print(Del)
+        MatInv   = np.linalg.pinv(Del)
+        res[0:5] = statesf[0:5] - ref[0:5]     # Free final mass & free final true longitude (angle)
+        res[5] = 0 - ref[13]     # Free final mass & free final true longitude (angle)
+        del_p0   = np.matmul(MatInv,res)
+        p0       = p0 + del_p0
+        # DEL      = 1e-5*(p0/np.linalg.norm(p0))
 
         # Compute Error
         mps_err = np.linalg.norm(res)

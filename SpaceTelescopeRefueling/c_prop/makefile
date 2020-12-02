@@ -18,13 +18,13 @@ SDIR = src
 
 LIBS = -lm #-lnlopt
 
-_DEPS1_inc = const.hpp states_twobody_thrust.hpp spacecraft_params.hpp eclipse_model.hpp c_functions.hpp
+_DEPS1_inc = const.hpp states_twobody_thrust.hpp spacecraft_params.hpp eclipse_model.hpp c_functions.hpp chebyshev_coeff_gen.hpp chebyshev.h lsq_chebyshev_fit.h
 DEPS1_inc = $(patsubst %,$(IDIR)/%,$(_DEPS1_inc))
 
 _SPICE = cspice.a
 SPICE_lib = $(patsubst %,$(CSPICE)/%,$(_SPICE))
 
-_OBJ1 = main_simulation.o states_twobody_thrust.o eclipse_model.o c_functions.o
+_OBJ1 = main_simulation.o states_twobody_thrust.o eclipse_model.o c_functions.o chebyshev_coeff_gen.o chebyshev.o lsq_chebyshev_fit.o
 OBJ1 = $(patsubst %,$(ODIR)/%,$(_OBJ1))
 
 $(ODIR)/%.o: $(SDIR)/%.cpp

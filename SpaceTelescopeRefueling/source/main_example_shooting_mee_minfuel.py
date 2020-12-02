@@ -25,58 +25,11 @@ from functions import switch_function
 from plot_routines import plot_mee_minfuel
 from mee_ocp_finite_difference import mee_ocp_central_difference
 import spacecraft_params as sc
+import scipy
 
 # Load Spice Kernels
 sp.furnsh( "/Users/robynmw/Dropbox/CODE/mice/kernels/naif0012.tls" )
 sp.furnsh( "/Users/robynmw/Dropbox/CODE/mice/kernels/de438.bsp" )
-
-def mee_ocp_central_difference(x):
-    """
-    Central different computation of the Jacobian of the cost funtion.
-    Parameters:
-    ===========
-    tspan   -- vector containting initial and final time
-    p0      -- initial costates guess
-    states0 -- initial state vector (modified equinoctial elements)
-    rho     -- switch smoothing parameter
-    eclipse -- boolean (true or false)
-    Returns:
-    ========
-    Jac -- Jacobian
-    External:
-    =========
-    numpy, spipy.integrate
-    """
-
-    # TEMP
-    tspan = np.array([0,642.54])
-    rho = 1
-    eclipse = False
-    meef = np.array([6.610864583184714, 0.0, 0.0, 0.0, 0.0, 0.0])
-
-    # Initialization
-    IC1  = np.zeros(14)
-    IC2  = np.zeros(14)
-    grad = np.zeros(7)
-    DEL  = 1e-5*(x[7:14]/np.linalg.norm(x[7:14]))
-
-    for i in range(0,7):
-
-        IC1 = x
-        IC2 = x
-        IC1[i+7] = IC1[i+7]+DEL[i]
-        IC2[i+7] = IC2[i+7]-DEL[i]
-
-        # Integrate Dynamics
-        sol1 = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,IC1,method='LSODA',rtol=1e-13)
-        sol2 = integrator(lambda t,y: eom_mee_twobodyJ2_minfuel(t,y,rho,eclipse),tspan,IC2,method='LSODA',rtol=1e-13)
-
-        res1 = np.linalg.norm(meef[0:5] - sol1.y[0:5,-1])
-        res2 = np.linalg.norm(meef[0:5] - sol2.y[0:5,-1])
-
-        grad[i] = (res1-res2)/(2*DEL[i])
-
-    return grad
 
 def residuals_mee_ocp(p0,tspan,mee0,meef,rho,eclipse):
     """
@@ -130,32 +83,33 @@ M   = 0
 meef = [p, f, g, h, k, L]
 # Costate Guess
 p0 = np.zeros(7)
-# p0[0] = -4.620949386264961
-# p0[1] = -12.037907266888872
-# p0[2] = 0.208961742408408
-# p0[3] = 5.946490544006020
-# p0[4] = 0.042440374825155
-# p0[5] = 0.002470486378745
-# p0[6] = 0.117893582793439
-p0 = 0.1*np.random.rand(7)
+p0[0] = -4.620949386264961
+p0[1] = -12.037907266888872
+p0[2] = 0.208961742408408
+p0[3] = 5.946490544006020
+p0[4] = 0.042440374825155
+p0[5] = 0.002470486378745
+p0[6] = 0.117893582793439
+# p0 = 0.1*np.random.rand(7)
 
 # Solve Min-Fuel Low Thrust
-rho = 1 # Continuation Parameter (engine throttle)
-eclipse = False
-p0_guess = p0
-# optres = minimize(residuals_mee_ocp,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',tol=1e-2)
-optres = minimize(residuals_mee_ocp,p0_guess[0:7],args=(tspan,mee0,meef,rho,eclipse),method='BFGS',tol=1e-2)
-print("opt_err:",optres.fun)
-# print(states0_new)
-p0 = optres.x
-
-sys.exit()
+# rho = 1 # Continuation Parameter (engine throttle)
+# eclipse = False
+# p0_guess = p0
+# optres = minimize(residuals_mee_ocp, p0_guess[0:7],args=(tspan,mee0,meef,rho,eclipse), jac='2-point', method = 'trust-constr')
+# # optres = minimize(residuals_mee_ocp,p0_guess[0:7],args=(tspan,mee0,meef,rho),method='Nelder-Mead',tol=1e-2)
+# print("opt_err:",optres.fun)
+# # print(states0_new)
+# p0 = optres.x
+# print(p0)
+#
+# sys.exit()
 # Continuation on rho
 rho      = 1
 rho_rate = 0.9
 mps_tol  = 1e-4
 iter     = 0
-eclipse  = False # Commented out in eom.py - too slow, need use a C++ eom and wrap in python)
+eclipse  = False # Commented out in eom.py - too slow, need to use a C++ eom and wrap in python)
 while rho > 1e-4:
 
     if rho < 1e-3:

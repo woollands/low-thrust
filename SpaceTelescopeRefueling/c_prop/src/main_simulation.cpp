@@ -25,9 +25,11 @@
 
 // #include "../../../../cspice/src/cspice/conics_c.c"
 # include "../../../../../../Dropbox/CODE/cspice/src/cspice/furnsh_c.c"
+# include "../../../../../../Dropbox/CODE/cspice/src/cspice/str2et_c.c"
 
 #include "const.hpp"
 #include "states_twobody_thrust.hpp"
+#include "chebyshev_coeff_gen.hpp"
 
 using namespace std;
 using namespace boost::numeric::odeint;
@@ -99,5 +101,22 @@ int main()
       out.close();
 
     }
+
+    // ConstSpiceChar * str;
+    // SpiceDouble    * et;
+    // str = "1 JAN 2020 UTC";
+    // str2et_c(str,et);
+
+    double t0 = 0.0;
+    double tf = 642.549910873478;
+    int N;
+    N = (int) ((tf-t0)/30/86400) * 40;
+    if (N == 0){
+      N = 40;
+    }
+    double coeff[N*N];
+    memset( coeff, 0.0, (N*N*sizeof(double)));
+    chebyshev_coeff_gen(N,t0,tf,coeff);
+    // spkezr_c("SUN", t, "J2000", "LT+S", "EARTH", states, &owlt);
 
 }
